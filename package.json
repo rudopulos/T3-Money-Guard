@@ -2,7 +2,7 @@
   "name": "money-guard",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://ANPA21.github.io/MoneyGuard/",
+  "homepage": "https://rudopulos.github.io/T3-Money-Guard/",
   "dependencies": {
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
