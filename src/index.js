@@ -14,7 +14,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     <HelmetProvider>
       <Provider store={store}>
         <PersistGate loading={null} persistor={peristor}>
-          <BrowserRouter basename="/MoneyGuard">
+          <BrowserRouter basename="/T3-Money-Guard">
             <GlobalStyles />
             <App />
           </BrowserRouter>
