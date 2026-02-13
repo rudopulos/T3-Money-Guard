@@ -1,7 +1,7 @@
 import { SpinnerLoader } from 'components/Spinner/Spinner';
 import { DataTable } from 'components/Statistics/StatisticsDataTable';
 import DatePicker from 'components/Statistics/datePicker';
-import StatiscticsChart from 'components/Statistics/statisticsChart';
+import StatisticsChart from 'components/Statistics/statisticsChart';
 import { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useDispatch, useSelector } from 'react-redux';
@@ -13,16 +13,16 @@ import {
   selectCategories,
   selectStatisticsData,
 } from 'redux/statistics/statisticsSelectors';
-
-const {
+import {
   StatSection,
   RightSideStatWrapper,
   DatePickerWrapper,
   DataWrapper,
   TitleStyled,
   LeftSideWrapper,
-} = require('./Statistics.styled');
-const StatiscticsPage = () => {
+} from './Statistics.styled';
+
+const StatisticsPage = () => {
   const dispatch = useDispatch();
 
   const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
@@ -101,4 +101,4 @@ const StatiscticsPage = () => {
     </StatSection>
   );
 };
-export default StatiscticsPage;
+export default StatisticsPage;

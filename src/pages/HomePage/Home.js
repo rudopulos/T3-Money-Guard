@@ -29,13 +29,10 @@ import { RotatingLines } from 'react-loader-spinner';
 import { TransactionCard } from './TransactionCard/TransactionCard';
 import { transactionSlice } from '../../redux/transactionsRedux/transactionsSlice';
 import { ScrollToTopButton } from './ScrollToTopButton/ScrollToTopButton';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchTransactions, deleteItem } from 'redux/transactionsRedux/transactionsOperations';
 
 const Home = () => {
-  const { useDispatch, useSelector } = require('react-redux');
-  const {
-    fetchTransactions,
-    deleteItem,
-  } = require('redux/transactionsRedux/transactionsOperations');
   const dispatch = useDispatch();
   const [id, setId] = useState(null);
   const modalType = useSelector(selectModalTypeState);

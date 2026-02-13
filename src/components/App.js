@@ -13,7 +13,7 @@ import { useMediaQuery } from 'react-responsive';
 const Home = lazy(() => import('../pages/HomePage/Home'));
 const Login = lazy(() => import('pages/LoginPage/Login'));
 const Register = lazy(() => import('pages/RegisterPage/Register'));
-const StatiscticsPage = lazy(() => import('pages/StatisticsPage/Statistics'));
+const StatisticsPage = lazy(() => import('pages/StatisticsPage/Statistics'));
 const WrongPage = lazy(() => import('../pages/WrongPage/WrongPage'));
 const Dashboard = lazy(() => import('../pages/dashboard_page/Dashboard'));
 const CurrencyPage = lazy(() =>
@@ -64,7 +64,7 @@ export const App = () => {
               path="/statistics"
               element={
                 <PrivateRoute>
-                  <StatiscticsPage />
+                  <StatisticsPage />
                 </PrivateRoute>
               }
             />

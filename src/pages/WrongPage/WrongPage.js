@@ -7,13 +7,14 @@ import { CustomButton } from 'components/CustomElements/CustomButton';
 const WrongPage = () => {
   return (
     <DivStyle>
-      <Img src={wrongPageImage} 
-      srcSet={wrongPageImageWebp}
-      alt="Oops, wrong page" />
+      <picture>
+        <source srcSet={wrongPageImageWebp} type="image/webp" />
+        <Img src={wrongPageImage} alt="Oops, wrong page" />
+      </picture>
 
       <CustomButton
         type="button"
-        onClick={() => (window.location.href = '/MoneyGuard/home')}
+        onClick={() => (window.location.href = '/T3-Money-Guard/home')}
       >
         GO HOME{' '}
       </CustomButton>
