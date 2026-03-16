@@ -1,4 +1,5 @@
 import { CustomButton } from 'components/CustomElements/CustomButton';
+import { DEMO_EMAIL, DEMO_PASSWORD } from 'demo/fallbackApi';
 import { useDispatch } from 'react-redux';
 import * as Yup from 'yup';
 import { logIn } from 'redux/authReducer/operations';
@@ -50,45 +51,59 @@ const LoginForm = () => {
       validationSchema={ValidationSchema}
       onSubmit={handleSubmit}
     >
-      <FormStyled>
-        <LogotipStyled>
-          <img
-            src={Logotip}
-            alt="Logo MoneyGuard"
-            width="36px"
-            height="36px"
-            draggable="false"
-          />
-          <h3>MoneyGuard</h3>
-        </LogotipStyled>
-
-        <LabelStyled>
-          <IconInInput>
-            <IconContainer>
-              <EmailIcon />
-            </IconContainer>
-            <InputStyled name="email" type="email" placeholder="E-mail" />
-          </IconInInput>
-        </LabelStyled>
-
-        <LabelStyled>
-          <IconInInput>
-            <IconContainer>
-              <PasswordIcon />
-            </IconContainer>
-            <InputStyled
-              name="password"
-              type="password"
-              placeholder="Password"
+      {({ setFieldValue, setFieldTouched }) => (
+        <FormStyled>
+          <LogotipStyled>
+            <img
+              src={Logotip}
+              alt="Logo MoneyGuard"
+              width="36px"
+              height="36px"
+              draggable="false"
             />
-          </IconInInput>
-        </LabelStyled>
+            <h3>MoneyGuard</h3>
+          </LogotipStyled>
 
-        <CustomButton type="submit">Log In</CustomButton>
-        <CustomButton isNavLink to="/register">
-          Register
-        </CustomButton>
-      </FormStyled>
+          <LabelStyled>
+            <IconInInput>
+              <IconContainer>
+                <EmailIcon />
+              </IconContainer>
+              <InputStyled name="email" type="email" placeholder="E-mail" />
+            </IconInInput>
+          </LabelStyled>
+
+          <LabelStyled>
+            <IconInInput>
+              <IconContainer>
+                <PasswordIcon />
+              </IconContainer>
+              <InputStyled
+                name="password"
+                type="password"
+                placeholder="Password"
+              />
+            </IconInInput>
+          </LabelStyled>
+
+          <CustomButton
+            type="button"
+            onClick={() => {
+              setFieldValue('email', DEMO_EMAIL);
+              setFieldValue('password', DEMO_PASSWORD);
+              setFieldTouched('email', true, false);
+              setFieldTouched('password', true, false);
+            }}
+          >
+            Use demo account
+          </CustomButton>
+
+          <CustomButton type="submit">Log In</CustomButton>
+          <CustomButton isNavLink to="/register">
+            Register
+          </CustomButton>
+        </FormStyled>
+      )}
     </Formik>
   );
 };

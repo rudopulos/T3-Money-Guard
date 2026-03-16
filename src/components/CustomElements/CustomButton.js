@@ -1,4 +1,5 @@
 import { NavLink } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 import { Button } from '@mui/material';
 
@@ -45,5 +46,10 @@ const CustomNavLinkBtnBase = styled(NavLink)`
 
 export const CustomButton = ({ isNavLink, customStyles, ...props }) => {
   const StyledComponent = isNavLink ? CustomNavLinkBtnBase : CustomButtonBase;
-  return <StyledComponent {...props} />;
+  return <StyledComponent style={customStyles} {...props} />;
+};
+
+CustomButton.propTypes = {
+  isNavLink: PropTypes.bool,
+  customStyles: PropTypes.object,
 };

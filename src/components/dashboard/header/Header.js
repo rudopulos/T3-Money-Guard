@@ -1,4 +1,5 @@
 import React, { useRef } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 import { toggleLogOutModal } from 'redux/modal/ModalSlice';
@@ -25,7 +26,6 @@ import { selectModalState, selectModalTypeState } from 'redux/modal/selectors';
 
 export const Header = () => {
   const navigate = useNavigate();
-  const { useDispatch, useSelector } = require('react-redux');
   const dispatch = useDispatch();
 
   const modalType = useSelector(selectModalTypeState);
@@ -38,7 +38,6 @@ export const Header = () => {
   const goToHome = () => {
     navigate('/home');
   };
-
 
   return (
     <Div>
@@ -56,7 +55,6 @@ export const Header = () => {
               type="button"
               onClick={() => dispatch(toggleLogOutModal())}
             >
-
               <ExitOutline />
               <ExitText>Exit</ExitText>
             </ExitButton>
@@ -65,7 +63,9 @@ export const Header = () => {
       </HeaderContainer>
 
       {modalType === 'modal/toggleLogOutModal' && isModalOpen && (
-        <Modal children={<Logout />} />
+        <Modal>
+          <Logout />
+        </Modal>
       )}
     </Div>
   );

@@ -53,7 +53,7 @@ const Home = () => {
 
   useEffect(() => {
     dispatch(fetchTransactions());
-  }, [dispatch, fetchTransactions]);
+  }, [dispatch]);
 
   const allTransactions = useSelector(
     state => state[transactionSlice.name].transactions
@@ -146,13 +146,19 @@ const Home = () => {
       </AddButton>
 
       {modalType === 'modal/toggleAddModal' && isModalOpen && (
-        <Modal children={<AddTransaction />} />
+        <Modal>
+          <AddTransaction />
+        </Modal>
       )}
       {modalType === 'modal/toggleEditModal' && isModalOpen && (
-        <Modal children={<EditTransaction id={id} />} />
+        <Modal>
+          <EditTransaction id={id} />
+        </Modal>
       )}
       {modalType === 'modal/toggleLogOutModal' && isModalOpen && (
-        <Modal children={<Logout />} showCloseIcon={false} />
+        <Modal showCloseIcon={false}>
+          <Logout />
+        </Modal>
       )}
     </Container>
   );

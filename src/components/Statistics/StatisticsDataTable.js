@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import {
   Body,
   ColorBox,
@@ -60,4 +61,17 @@ export const DataTable = ({ reduxData }) => {
       </Footer>
     </Container>
   );
+};
+
+DataTable.propTypes = {
+  reduxData: PropTypes.shape({
+    categoryExpenses: PropTypes.arrayOf(
+      PropTypes.shape({
+        name: PropTypes.string.isRequired,
+        total: PropTypes.string.isRequired,
+      })
+    ).isRequired,
+    totalExpenses: PropTypes.number.isRequired,
+    totalIncome: PropTypes.number.isRequired,
+  }).isRequired,
 };

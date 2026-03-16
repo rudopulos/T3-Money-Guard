@@ -1,7 +1,7 @@
-const { CurrencyContainer } = require('./CurrencyMobile.styled');
+import { CurrencyContainer } from './CurrencyMobile.styled';
 
 const CurrencyPage = () => {
-  return <CurrencyContainer></CurrencyContainer>;
+  return <CurrencyContainer />;
 };
 
 export default CurrencyPage;

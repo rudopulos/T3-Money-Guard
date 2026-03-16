@@ -1,9 +1,10 @@
 import { components } from 'react-select';
+import PropTypes from 'prop-types';
 import { VscChevronDown, VscChevronUp } from 'react-icons/vsc';
 import { StyledDateSelector } from './dateSelector.styled';
 
 const DropdownIndicator = props => {
-  if (props.isF) {
+  if (props.isFocused) {
     return (
       <components.DropdownIndicator {...props}>
         <VscChevronUp />
@@ -15,6 +16,10 @@ const DropdownIndicator = props => {
       <VscChevronDown />
     </components.DropdownIndicator>
   );
+};
+
+DropdownIndicator.propTypes = {
+  isFocused: PropTypes.bool,
 };
 
 const customScrollbarStyles = {
@@ -48,4 +53,17 @@ export const DateSelector = ({ onChange, options, value, className }) => {
       />
     </div>
   );
+};
+
+DateSelector.propTypes = {
+  onChange: PropTypes.func.isRequired,
+  options: PropTypes.arrayOf(
+    PropTypes.shape({
+      value: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+        .isRequired,
+      label: PropTypes.string.isRequired,
+    })
+  ).isRequired,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  className: PropTypes.string,
 };

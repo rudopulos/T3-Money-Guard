@@ -1,5 +1,6 @@
 import { Formik, Field } from 'formik';
 import 'react-datepicker/dist/react-datepicker.css';
+import PropTypes from 'prop-types';
 import { object, string, number } from 'yup';
 import {
   AddBtn,
@@ -24,7 +25,9 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
 import { forwardRef, useState, useEffect } from 'react';
-import axios from 'axios';
+import axios from 'api/client';
+import { demoGetCategories, shouldUseDemoFallback } from 'demo/fallbackApi';
+
 const addSchema = object({
   value: number().positive().required('Amount is required'),
   comment: string()
@@ -62,6 +65,13 @@ const CustomInput = forwardRef(({ value, onClick }, ref) => (
   </>
 ));
 
+CustomInput.displayName = 'CustomInput';
+
+CustomInput.propTypes = {
+  value: PropTypes.string,
+  onClick: PropTypes.func,
+};
+
 export default function AddTransaction() {
   const dispatch = useDispatch();
   // const error = useSelector(selectError);
@@ -75,6 +85,11 @@ export default function AddTransaction() {
       const response = await axios.get(`/transactions/categories`);
       setCategories(response.data);
     } catch (error) {
+      if (shouldUseDemoFallback(error)) {
+        setCategories(demoGetCategories());
+        return;
+      }
+
       return error.message;
     }
   };
@@ -108,7 +123,7 @@ export default function AddTransaction() {
         validationSchema={addSchema}
         onSubmit={handleSubmit}
       >
-        {({ values, setFieldValue, validate, ...props }) => (
+        {({ values, setFieldValue }) => (
           <StyledForm autoComplete="off">
             <SwitcherWrapper>
               <CustomSwitch
@@ -129,17 +144,15 @@ export default function AddTransaction() {
                 />
                 <ErrorMessageStyled name="category" component="div" />
               </>
-            ) : (
-              (values.category = '')
-            )}
+            ) : null}
             <Wrapper>
               <Label>
                 <StyledSum type="number" name="value" placeholder="0.00" />
                 <ErrorMessageStyled name="value" component="div" />
               </Label>
               <Label>
-                <Field name="date" validate={validate}>
-                  {({ field, form, meta }) => (
+                <Field name="date">
+                  {() => (
                     <DatePicker
                       name="date"
                       dateFormat="dd.MM.yyyy"

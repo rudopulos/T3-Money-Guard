@@ -1,4 +1,5 @@
 import { Formik, Field } from 'formik';
+import PropTypes from 'prop-types';
 import { object, string, number } from 'yup';
 import {
   AddBtn,
@@ -15,7 +16,8 @@ import {
 import { forwardRef, useState, useEffect } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import axios from 'axios';
+import axios from 'api/client';
+import { demoGetCategories, shouldUseDemoFallback } from 'demo/fallbackApi';
 import { toggleModal } from 'redux/modal/ModalSlice';
 import { CustomSelect } from 'components/Add/SelectCategory/SelectCategory.js';
 import { CustomSwitch } from 'components/CustomElements/CustomSwitch/CustomSwitch.js';
@@ -54,6 +56,13 @@ const CustomInput = forwardRef(({ value, onClick }, ref) => (
   </>
 ));
 
+CustomInput.displayName = 'CustomInput';
+
+CustomInput.propTypes = {
+  value: PropTypes.string,
+  onClick: PropTypes.func,
+};
+
 export default function EditTransaction({ id }) {
   const dispatch = useDispatch();
   const transactions = useSelector(selectorTransactions);
@@ -76,6 +85,11 @@ export default function EditTransaction({ id }) {
       const response = await axios.get(`/transactions/categories`);
       setCategories(response.data);
     } catch (error) {
+      if (shouldUseDemoFallback(error)) {
+        setCategories(demoGetCategories());
+        return;
+      }
+
       return error.message;
     }
   };
@@ -107,7 +121,7 @@ export default function EditTransaction({ id }) {
         validationSchema={addSchema}
         onSubmit={handleSubmit}
       >
-        {({ values, setFieldValue, validate }) => (
+        {({ values, setFieldValue }) => (
           <StyledForm autoComplete="off">
             <SwitcherWrapper>
               <CustomSwitch
@@ -128,17 +142,15 @@ export default function EditTransaction({ id }) {
                 />
                 <ErrorMessageStyled name="category" component="div" />
               </>
-            ) : (
-              (values.category = '')
-            )}
+            ) : null}
             <Wrapper>
               <Label>
                 <StyledSum type="number" name="value" />
                 <ErrorMessageStyled name="value" component="div" />
               </Label>
               <Label>
-                <Field name="date" validate={validate}>
-                  {({ field, form, meta }) => (
+                <Field name="date">
+                  {() => (
                     <DatePicker
                       name="date"
                       dateFormat="dd.MM.yyyy"
@@ -165,3 +177,7 @@ export default function EditTransaction({ id }) {
     </>
   );
 }
+
+EditTransaction.propTypes = {
+  id: PropTypes.string.isRequired,
+};

@@ -1,7 +1,7 @@
 import storage from 'redux-persist/lib/storage';
 import { persistReducer } from 'redux-persist';
-const { createSlice } = require('@reduxjs/toolkit');
-const { register, logIn, logOut, refreshUser } = require('./operations');
+import { createSlice } from '@reduxjs/toolkit';
+import { register, logIn, logOut, refreshUser } from './operations';
 
 const initialState = {
   user: { name: null, email: null },
@@ -38,7 +38,7 @@ const handlePendingRefreshUser = state => {
   state.isRefreshing = true;
 };
 
-const handleRejectedRefreshUser = (state, { payload }) => {
+const handleRejectedRefreshUser = state => {
   state.isRefreshing = false;
 };
 

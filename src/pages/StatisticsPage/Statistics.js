@@ -22,31 +22,34 @@ import {
   LeftSideWrapper,
 } from './Statistics.styled';
 
+const generateParams = (year, month) => {
+  const params = new URLSearchParams();
+  params.append('year', year);
+  params.append('month', month);
+
+  return params.toString();
+};
+
 const StatisticsPage = () => {
   const dispatch = useDispatch();
-
   const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
   const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth() + 1);
   const [query, setQuery] = useState(
     generateParams(selectedYear, selectedMonth)
   );
+
   useEffect(() => {
     dispatch(getCategories());
   }, [dispatch]);
-  function generateParams(year, month) {
-    const params = new URLSearchParams();
-    params.append('year', year);
-    params.append('month', month +1);
-    return params.toString();
-  }
+
   useEffect(() => {
-    const newQuery = generateParams(selectedYear, selectedMonth);
-    setQuery(newQuery);
-  }, [selectedYear, selectedMonth, query]);
+    setQuery(generateParams(selectedYear, selectedMonth));
+  }, [selectedYear, selectedMonth]);
 
   useEffect(() => {
     dispatch(getStatistics(query));
-  }, [query, dispatch]);
+  }, [dispatch, query]);
+
   const reduxData = useSelector(selectStatisticsData);
   const categories = useSelector(selectCategories);
 
@@ -61,14 +64,15 @@ const StatisticsPage = () => {
   return (
     <StatSection>
       <Helmet>
-        <title>Statisctics</title>
+        <title>Statistics</title>
       </Helmet>
+
       <RightSideStatWrapper>
         <LeftSideWrapper>
           <TitleStyled>Statistics</TitleStyled>
 
           {categories && reduxData ? (
-            <StatiscticsChart
+            <StatisticsChart
               reduxData={reduxData}
               categories={categories}
               style={{
@@ -82,6 +86,7 @@ const StatisticsPage = () => {
             <SpinnerLoader />
           )}
         </LeftSideWrapper>
+
         <DataWrapper>
           <DatePickerWrapper>
             <DatePicker
@@ -91,6 +96,7 @@ const StatisticsPage = () => {
               selectedYear={selectedYear}
             />
           </DatePickerWrapper>
+
           {categories && reduxData ? (
             <DataTable reduxData={reduxData} />
           ) : (
@@ -101,4 +107,5 @@ const StatisticsPage = () => {
     </StatSection>
   );
 };
+
 export default StatisticsPage;

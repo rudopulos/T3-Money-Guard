@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react';
+import PropTypes from 'prop-types';
 import 'url-search-params-polyfill';
 import { DateSelector } from './dateSelector/dateSelector';
 
@@ -62,3 +63,10 @@ function DatePicker({ getYear, getMonth, selectedMonth, selectedYear }) {
 }
 
 export default DatePicker;
+
+DatePicker.propTypes = {
+  getYear: PropTypes.func.isRequired,
+  getMonth: PropTypes.func.isRequired,
+  selectedMonth: PropTypes.number.isRequired,
+  selectedYear: PropTypes.number.isRequired,
+};

@@ -1,4 +1,4 @@
-import React from 'react';
+import PropTypes from 'prop-types';
 import {
   SwitchContainer,
   Text,
@@ -23,4 +23,9 @@ export const CustomSwitch = ({ checked, onChange }) => {
       </Slider>
     </SwitchContainer>
   );
+};
+
+CustomSwitch.propTypes = {
+  checked: PropTypes.bool.isRequired,
+  onChange: PropTypes.func.isRequired,
 };

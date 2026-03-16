@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { ArcElement, Tooltip, Legend, Chart } from 'chart.js';
 import { colors } from './statiscticsColors';
 import { Balance, DonutContainer, DoughnutSt } from './statisticsChart.styled';
@@ -49,3 +50,16 @@ const StatiscticsChart = ({ reduxData, categories }) => {
 };
 
 export default StatiscticsChart;
+
+StatiscticsChart.propTypes = {
+  reduxData: PropTypes.shape({
+    categoryExpenses: PropTypes.arrayOf(
+      PropTypes.shape({
+        total: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
+          .isRequired,
+      })
+    ).isRequired,
+    totalExpenses: PropTypes.number.isRequired,
+  }).isRequired,
+  categories: PropTypes.arrayOf(PropTypes.string).isRequired,
+};

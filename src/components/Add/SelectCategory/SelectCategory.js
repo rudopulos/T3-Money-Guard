@@ -1,4 +1,5 @@
 import { components } from 'react-select';
+import PropTypes from 'prop-types';
 import { VscChevronDown, VscChevronUp } from 'react-icons/vsc';
 import { StyledSelect } from '../Add.styled';
 
@@ -15,6 +16,10 @@ const DropdownIndicator = props => {
       <VscChevronDown />
     </components.DropdownIndicator>
   );
+};
+
+DropdownIndicator.propTypes = {
+  isFocused: PropTypes.bool,
 };
 
 const customScrollbarStyles = {
@@ -48,4 +53,16 @@ export const CustomSelect = ({ onChange, options, value, className }) => {
       />
     </div>
   );
+};
+
+CustomSelect.propTypes = {
+  onChange: PropTypes.func.isRequired,
+  options: PropTypes.arrayOf(
+    PropTypes.shape({
+      value: PropTypes.string.isRequired,
+      label: PropTypes.string.isRequired,
+    })
+  ).isRequired,
+  value: PropTypes.string,
+  className: PropTypes.string,
 };

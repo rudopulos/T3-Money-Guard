@@ -33,7 +33,7 @@ export const transactionSlice = createSlice({
       .addCase(deleteItem.pending, state => {
         state.isLoading = true;
       })
-      .addCase(deleteItem.fulfilled, (state, action) => {
+      .addCase(deleteItem.fulfilled, state => {
         state.isLoading = false;
         state.error = null;
       })

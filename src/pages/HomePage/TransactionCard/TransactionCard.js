@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import {
   ColorSign,
   StyledButtonDelete,
@@ -45,10 +46,10 @@ export const TransactionCard = ({
                   <ColorSign type={type}>{numberSign}</ColorSign>
                 </StyledTypeOfField>
                 <StyledTypeOfField>
-                <StyledText>Category</StyledText>
-                <StyledCategory type={type}>
-                  {type === 'income' ? 'Income' : category}
-                </StyledCategory>
+                  <StyledText>Category</StyledText>
+                  <StyledCategory type={type}>
+                    {type === 'income' ? 'Income' : category}
+                  </StyledCategory>
                 </StyledTypeOfField>
                 <StyledTypeOfField>
                   <StyledText>Comment</StyledText>
@@ -80,4 +81,20 @@ export const TransactionCard = ({
       )}
     </StyledListCard>
   );
+};
+
+TransactionCard.propTypes = {
+  transactions: PropTypes.arrayOf(
+    PropTypes.shape({
+      createdAt: PropTypes.string.isRequired,
+      type: PropTypes.string.isRequired,
+      category: PropTypes.string,
+      comment: PropTypes.string,
+      value: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+        .isRequired,
+      _id: PropTypes.string.isRequired,
+    })
+  ).isRequired,
+  handleEditClick: PropTypes.func.isRequired,
+  deleteTransactions: PropTypes.func.isRequired,
 };

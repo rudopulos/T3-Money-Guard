@@ -1,8 +1,13 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
+import axios from 'api/client';
+import {
+  demoLogin,
+  demoLogout,
+  demoRefreshUser,
+  demoRegister,
+  shouldUseDemoFallback,
+} from 'demo/fallbackApi';
 import { toast } from 'react-toastify';
-
-axios.defaults.baseURL = 'https://moneyguardbackend.onrender.com/';
 
 const setAuthHeader = token => {
   axios.defaults.headers.common.Authorization = `Bearer ${token}`;
@@ -26,6 +31,25 @@ export const register = createAsyncThunk(
       }
       return response.data;
     } catch (error) {
+      if (shouldUseDemoFallback(error)) {
+        try {
+          const response = demoRegister(credentials);
+          setAuthHeader(response.token);
+          toast.success(`Welcome to Money Guard, ${response.user.name}!`, {
+            autoClose: 1200,
+          });
+          return response;
+        } catch (demoError) {
+          if (demoError.status === 409) {
+            toast.error('Email is already in use!', {
+              position: 'top-right',
+              autoClose: 1200,
+            });
+          }
+          return rejectWithValue(demoError.message);
+        }
+      }
+
       if (error.response) {
         if (error.response.status === 409) {
           toast.error('Email is already in use!', {
@@ -35,6 +59,8 @@ export const register = createAsyncThunk(
           return rejectWithValue(error.message);
         }
       }
+
+      return rejectWithValue(error.message);
     }
   }
 );
@@ -47,6 +73,16 @@ export const logIn = createAsyncThunk(
       setAuthHeader(response.data.token);
       return response.data;
     } catch (error) {
+      if (shouldUseDemoFallback(error)) {
+        try {
+          const response = demoLogin(credentials);
+          setAuthHeader(response.token);
+          return response;
+        } catch (demoError) {
+          return rejectWithValue(demoError.message);
+        }
+      }
+
       return rejectWithValue(error.message);
     }
   }
@@ -59,6 +95,12 @@ export const logOut = createAsyncThunk(
       await axios.post('/users/logout');
       clearAuthHeader();
     } catch (error) {
+      if (shouldUseDemoFallback(error)) {
+        demoLogout();
+        clearAuthHeader();
+        return;
+      }
+
       return rejectWithValue(error.message);
     }
   }
@@ -78,6 +120,14 @@ export const refreshUser = createAsyncThunk(
       const response = await axios.get('/users/current');
       return response.data;
     } catch (error) {
+      if (shouldUseDemoFallback(error)) {
+        try {
+          return demoRefreshUser(persistedToken);
+        } catch (demoError) {
+          return rejectWithValue(demoError.message);
+        }
+      }
+
       return rejectWithValue(error.message);
     }
   }

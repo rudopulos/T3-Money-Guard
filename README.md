@@ -1,45 +1,96 @@
 # Money Guard
 
-Приложение для отслеживания финансов, созданное с помощью Create React App и Redux.
+Money Guard is a responsive personal finance tracker built with React and Redux Toolkit.
+It allows users to register, log in, manage transactions, and view statistics for their income and expenses.
 
-## Подготовка нового проекта
+## Live demo
 
-1. Убедись что на компьютере установлена LTS-версия Node.js.
-   [Скачай и установи](https://nodejs.org/en/) её если необходимо.
-2. Склонируй этот репозиторий.
-3. Открой проект в VSCode, запусти терминал и установи зависимости командой `npm install`.
-4. Запусти режим разработки, выполнив команду `npm start`.
-5. Приложение откроется в браузере по адресу [http://localhost:3000](http://localhost:3000).
-   Страница будет автоматически перезагружаться после сохранения изменений в файлах проекта.
+- Live app: https://rudopulos.github.io/T3-Money-Guard/
 
-## Структура проекта
+## Main features
 
-- `/src` - исходный код приложения
-  - `/components` - React компоненты
-  - `/pages` - страницы приложения
-  - `/redux` - Redux слайсы, операции и селекторы
-  - `/styles` - глобальные стили
-  - `/hooks` - пользовательские хуки
-  - `/images` - изображения приложения
+- User authentication
+- Protected routes
+- Add, edit, and delete transactions
+- Income and expense separation
+- Monthly statistics view
+- Responsive layout for desktop and mobile
+- Persisted auth and selected app state
 
-## Доступные скрипты
+## Tech stack
 
-- `npm start` - запуск приложения в режиме разработки
-- `npm build` - сборка приложения для production
-- `npm test` - запуск тестов
-- `npm run lint:js` - проверка кода с помощью ESLint
+- React 18
+- React Router 6
+- Redux Toolkit
+- Redux Persist
+- Styled Components
+- MUI
+- Formik + Yup
+- Axios
+- Chart.js
 
-## Деплoy на GitHub Pages
+## Getting started
 
-Проект уже настроен на автоматический деплой на GitHub Pages. После каждого пуша в ветку `main`, GitHub Actions автоматически собирает и деплоит приложение.
+### 1. Install dependencies
 
-Для корректной работы убедись, что:
-1. В `package.json` установлено правильное значение `homepage` (если нужна работа с подпапкой).
-2. GitHub Actions включены в настройках репозитория (`Settings` > `Actions` > `General`).
-3. GitHub Pages настроены на использование `gh-pages` ветки (`Settings` > `Pages`).
-
-```json
-"homepage": "https://rudopulos.github.io/T3-Money-Guard/"
+```bash
+npm install
 ```
 
-Более информацию читай в [документации GitHub Pages](https://docs.github.com/pages).
+### 2. Create environment file
+
+Create a `.env` file based on `.env.example`.
+
+```env
+REACT_APP_API_BASE_URL=https://moneyguardbackend.onrender.com/
+```
+
+### 3. Start development server
+
+```bash
+npm start
+```
+
+### 4. Create a production build
+
+```bash
+npm run build
+```
+
+### 5. Run lint
+
+```bash
+npm run lint:js
+```
+
+## Project structure
+
+- `src/components` - reusable UI components
+- `src/pages` - application pages
+- `src/redux` - slices, selectors, and async operations
+- `src/hooks` - custom hooks
+- `src/styles` - global styles and shared tokens
+- `src/api` - shared API client configuration
+
+## Deployment
+
+The project is configured for GitHub Pages deployment.
+
+- `homepage` is set in `package.json`
+- `BrowserRouter` uses the correct basename
+- GitHub Actions workflow is available in `.github/workflows/deploy.yml`
+
+## Notes
+
+- This repository contains the frontend application.
+- The app depends on an external backend API.
+- This project was created as a learning project and then cleaned up for portfolio presentation.
+
+## Demo fallback (portfolio mode)
+
+If the backend API is unavailable, the app automatically falls back to local demo data in the browser.
+
+- Demo email: `demo@moneyguard.dev`
+- Demo password: `Demo12345!`
+
+In fallback mode, auth, transactions, and statistics continue to work locally so the project can still be presented.
