@@ -29,8 +29,7 @@ import { selectorTransactions } from 'redux/transactionsRedux/transactionsSelect
 const addSchema = object({
   value: number().positive().required('Amount is required'),
   comment: string()
-    .max(30, 'Maximum must be 30 characters')
-    .required('Please fill in comment'),
+    .max(30, 'Maximum must be 30 characters'),
   category: string()
     .min(3)
     .oneOf([
