@@ -27,7 +27,7 @@ export const Balance = () => {
       <Text>Your balance</Text>
       <Line>
         <Symbol>Ron</Symbol>
-        <Total>{balance}</Total>
+        <Total>{Number(balance).toLocaleString('ro-RO', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</Total>
       </Line>
     </BalanceStyled>
   );

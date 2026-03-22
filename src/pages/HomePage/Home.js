@@ -58,11 +58,14 @@ const Home = () => {
   const allTransactions = useSelector(
     state => state[transactionSlice.name].transactions
   );
+  
   const sortedTransactions = allTransactions
     .slice()
-    .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-
-  const top5Transactions = sortedTransactions.slice(0, 5);
+    .sort((a, b) => {
+      const dateA = new Date(a.date || a.createdAt);
+      const dateB = new Date(b.date || b.createdAt);
+      return dateB - dateA;
+    });
 
   return (
     <Container>
@@ -78,23 +81,26 @@ const Home = () => {
           <Data>
             {isLoading ? (
               <TableRow>
-                <div>
-                  <RotatingLines visible={true} height="80" width="80" />
+                <div style={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
+                  <RotatingLines visible={true} height="40" width="40" />
                 </div>
               </TableRow>
             ) : (
-              top5Transactions.map(
-                ({ createdAt, type, category, comment, value, _id }) => {
-                  let date = new Date(createdAt).toLocaleDateString();
+              sortedTransactions.map(
+                ({ createdAt, date: transactionDate, type, category, comment, value, _id }) => {
+                  let dateStr = new Date(transactionDate || createdAt).toLocaleDateString();
                   let numberSign = '+';
                   let colorClassName = 'colorIncome';
                   if (type === 'expense') {
                     numberSign = '-';
                     colorClassName = 'colorExpense';
                   }
+                  
+                  const formattedValue = Number(value).toLocaleString('ro-RO', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                  
                   return (
                     <TableRow key={_id} className="data">
-                      <TableDataDate>{date}</TableDataDate>
+                      <TableDataDate>{dateStr}</TableDataDate>
                       <TableDataType>{numberSign}</TableDataType>
                       {type === 'income' ? (
                         <TableData>Income</TableData>
@@ -104,12 +110,12 @@ const Home = () => {
                       <TableDataComment>{comment}</TableDataComment>
 
                       <TableDataColor type={type} className={colorClassName}>
-                        {value}
+                        {formattedValue}
                       </TableDataColor>
                       <PencilButton>
-                        <BiPencil onClick={() => handleEditClick(_id)} />
+                        <BiPencil onClick={() => handleEditClick(_id)} cursor="pointer" />
                         <CustomButton
-                          style={{}}
+                          style={{ cursor: 'pointer' }}
                           className="deleteItem"
                           onClick={() => {
                             deleteTransactions(_id);
@@ -130,7 +136,7 @@ const Home = () => {
         <>
           <ScrollToTopButton />
           <TransactionCard
-            transactions={top5Transactions}
+            transactions={sortedTransactions}
             handleEditClick={handleEditClick}
             deleteTransactions={deleteTransactions}
           />
@@ -161,6 +167,7 @@ const Home = () => {
         </Modal>
       )}
     </Container>
+
   );
 };
 

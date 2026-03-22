@@ -11,7 +11,7 @@ import {
 import { modalReducer } from './modal/ModalSlice';
 import { PersistedCurrencyReducer } from './currencyReducer/currencySlice';
 import { PersistedAuthReducer } from './authReducer/slice';
-import balanceReducer from './balance/balance.Slice';
+import { PersistedBalanceReducer } from './balance/balance.Slice';
 import { PersistedTransactionReducer } from './transactionsRedux/transactionsSlice';
 import { PersistedStatisticsReducer } from './statistics/statisticsSlice';
 
@@ -20,7 +20,7 @@ export const store = configureStore({
     auth: PersistedAuthReducer,
     modal: modalReducer,
     currency: PersistedCurrencyReducer,
-    balance: balanceReducer,
+    balance: PersistedBalanceReducer,
     transactions: PersistedTransactionReducer,
     statistics: PersistedStatisticsReducer,
   },

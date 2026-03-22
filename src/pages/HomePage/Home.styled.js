@@ -12,7 +12,7 @@ export const Container = styled.div`
   }
   @media screen and (min-width: 1280px) {
     width: 715px;
-    height: 308px;
+    height: auto;
     margin: 40px 0 0 69px;
   }
 `;
@@ -48,6 +48,19 @@ export const TableHead = styled.div`
 
 export const Data = styled.div`
   color: var(--white);
+  max-height: 400px;
+  overflow-y: auto;
+
+  &::-webkit-scrollbar {
+    width: 4px;
+  }
+  &::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.1);
+  }
+  &::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 2px;
+  }
 `;
 
 export const TableRow = styled.div`

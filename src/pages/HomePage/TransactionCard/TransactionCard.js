@@ -57,7 +57,7 @@ export const TransactionCard = ({
                 </StyledTypeOfField>
                 <StyledTypeOfField>
                   <StyledText>Sum</StyledText>
-                  <ColorSign type={type}>{value}</ColorSign>
+                  <ColorSign type={type}>{Number(value).toLocaleString('ro-RO', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</ColorSign>
                 </StyledTypeOfField>
                 <StyledWrapperButtons>
                   <li>

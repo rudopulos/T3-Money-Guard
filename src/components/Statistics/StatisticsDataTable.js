@@ -38,7 +38,7 @@ export const DataTable = ({ reduxData }) => {
                   <ColorBox color={boxColor.color} />
                   <RowText>
                     <span>{category.name}</span>
-                    <StyledTdSum>{category.total}</StyledTdSum>
+                    <StyledTdSum>{Number(category.total).toLocaleString('ro-RO', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</StyledTdSum>
                   </RowText>
                 </StyledTdCat>
               </StyledTr>
@@ -49,13 +49,13 @@ export const DataTable = ({ reduxData }) => {
         <Expenses>
           <span>Expenses:</span>
           <StyledTdTotal className="expenses">
-            {reduxData.totalExpenses.toFixed(2)}
+            {Number(reduxData.totalExpenses).toLocaleString('ro-RO', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
           </StyledTdTotal>
         </Expenses>
         <Income>
           <span>Income:</span>
           <StyledTdTotal className="income">
-            {reduxData.totalIncome.toFixed(2)}
+            {Number(reduxData.totalIncome).toLocaleString('ro-RO', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
           </StyledTdTotal>
         </Income>
       </Footer>
